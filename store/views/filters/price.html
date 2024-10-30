@@ -1,0 +1,27 @@
+<div class="filter price">
+    <h2><img class="icon" src="images/price.png" />Price</h2>
+    <ul class="more-links">
+        <li ng-click="resetPrices()"><a>Reset Range</a></li>
+    </ul>
+    <p class="description">Define the minimum and maximum price range.</p>
+    <div class="inner">
+        <ul>
+            <li>
+                <label>Min:</label>
+                <input type="range" ng-model="price.minimum" ng-mouseup="setPriceRange('minimum', price.minimum, price.maximum)" />
+                <span>
+                    {{currency.symbol}}
+                    {{statistics.ranges.price.min | convert: currency | number: 2}}
+                </span>
+            </li>
+            <li>
+                <label>Max:</label>
+                <input type="range" ng-model="price.maximum" ng-mouseup="setPriceRange('maximum', price.minimum, price.maximum)" />
+                <span>
+                    {{currency.symbol}}
+                    {{statistics.ranges.price.max | convert: currency | number: 2}}
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>

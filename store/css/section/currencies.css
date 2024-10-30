@@ -1,0 +1,40 @@
+section.currencies {
+    width: 200px;
+    clear: both;
+    float: right;
+    position: relative;
+    z-index: 101;
+    text-align: right;
+}
+
+section.currencies h3 {
+    font-weight: 200;
+    font-size: 14px;
+    margin: 12px 0 5px 0;
+    font-family: "Source Sans Pro", sans-serif;
+}
+
+section.currencies ul {
+    list-style-type: none;
+}
+
+section.currencies ul li {
+    margin-bottom: 0;
+}
+
+section.currencies ul li.active {
+    opacity: 1;
+    font-weight: bold;
+}
+
+section.currencies ul li a {
+    cursor: pointer;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 12px;
+}
+
+section.currencies ul li span.symbol {
+    color: rgba(0, 0, 0, .35);
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 12px;
+}

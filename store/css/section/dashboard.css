@@ -1,0 +1,39 @@
+section.dashboard {
+    height: 100px;
+    padding: 20px;
+}
+
+section.dashboard img.avatar {
+    height: 60px;
+    float: left;
+    border-radius: 50px;
+}
+
+section.dashboard a {
+    cursor: pointer;
+}
+
+section.dashboard a span.basket-items {
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 45px;
+    font-weight: 300;
+    padding-left: 20px;
+    margin-top: -2px;
+    color: black;
+    float: left;
+}
+
+section.dashboard a span.total-price {
+    font-family: "Source Sans Pro", sans-serif;
+    float: left;
+    font-size: 24px;
+    font-weight: 100;
+    color: rgba(0, 0, 0, .5);
+    margin: 15px 0 0 10px;
+}
+
+section.dashboard a img.checkout {
+    float: left;
+    opacity: .25;
+    margin: 25px 0 0 10px;
+}

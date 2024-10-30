@@ -1,0 +1,43 @@
+<section class="product" ng-controller="ProductController" ng-init="product = options.model; setProduct(product)">
+
+    <!--<div class="loading-apple" ng-show="!options.model">Loading...</div>-->
+
+    <ul class="links">
+        <li ng-click="close()"><img src="images/back.png" alt="Close" /></li>
+        <li ng-show="product.friendUrl.length"><img src="images/email.png" alt="Email to a Friend" /></li>
+    </ul>
+
+    <div class="header">
+
+        <div class="error" ng-show="errorMessage">
+            {{errorMessage}}
+        </div>
+
+        <img class="product" ng-src="{{product.largeImage}}" alt="{{product.name}}" />
+        <h2>{{product.name}}</h2>
+        <div class="price">
+            {{currency.symbol}}
+            {{product.price | convert: currency | number: 2}}
+        </div>
+
+        <select ng-show="product.type == 'configurable'" ng-options="product.name for product in product.models"
+                ng-change="changeProduct()" ng-model="selectedProduct">
+            <option value="">Please select a product...</option>
+        </select>
+
+        <input type="number" class="quantity" ng-model="quantity" />
+
+        <div class="btn" ng-class="{ selectable: (selectedProductId || !basketAdding), adding: basketAdding }" ng-click="addBasket(selectedProductId, quantity)">
+            <span ng-show="basketAdding">Adding...</span>
+            <span ng-show="!basketAdding">Add to Basket</span>
+        </div>
+
+        <div class="quantity">
+            Remaining: {{product.quantity}}
+        </div>
+
+    </div>
+
+    <div class="description" ng-bind-html="product.description"></div>
+
+</section>

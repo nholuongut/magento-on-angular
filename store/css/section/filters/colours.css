@@ -1,0 +1,33 @@
+section.filters div.filter.colours ul.filter-container {
+    margin-left: 5px;
+}
+
+section.filters div.filter.colours ul.filter-container li {
+    float: left;
+    overflow: hidden;
+    position: relative;
+    width: 100px;
+    padding: 5px;
+}
+
+section.filters div.filter.colours ul.filter-container li input {
+    float: left;
+    margin: 3px 0 0 10px;
+    pointer-events: none;
+}
+
+section.filters div.filter.colours ul.filter-container li label {
+    font-weight: 200;
+    cursor: pointer;
+    position: absolute;
+    padding: 5px 0 0 35px;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+section.filters div.filter.colours ul.filter-container li div.count {
+    font-weight: 200;
+    float: right;
+    color: rgba(0, 0, 0, .5);
+}

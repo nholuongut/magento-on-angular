@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Moa</title>
+    <link rel="stylesheet" href="css/default.css" />
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/hammerjs/hammer.js"></script>
+    <script src="bower_components/socket.io-client/dist/socket.io.js"></script>
+    <script src="js/Application.js"></script>
+    <script src="js/controllers/ApplicationController.js"></script>
+    <script src="js/controllers/ProductsController.js"></script>
+    <script src="js/controllers/ProductController.js"></script>
+    <script src="js/controllers/BasketController.js"></script>
+    <script src="js/controllers/CurrenciesController.js"></script>
+    <script src="js/controllers/AccountController.js"></script>
+    <script src="js/controllers/FiltersController.js"></script>
+    <script src="js/controllers/ModalController.js"></script>
+    <script src="js/filters/Convert.js"></script>
+    <script src="js/directives/Sidebar.js"></script>
+    <script src="js/directives/Filter.js"></script>
+    <script src="js/directives/Panel.js"></script>
+    <script src="js/services/Gateway.js"></script>
+    <script src="js/services/Basket.js"></script>
+    <script src="js/services/Currency.js"></script>
+    <script src="js/services/Config.js"></script>
+    <script src="js/services/Http.js"></script>
+    <script src="js/services/Socket.js"></script>
+</head>
+<body ng-app="moaApp" ng-controller="ApplicationController" ng-keyup="keyUp($event)">
+
+    <header>
+        <h1>Welcome to <span>Moa</span>.</h1>
+    </header>
+
+    <section ng-controller="ProductsController">
+
+        <section data-sidebar class="filters" ng-controller="FiltersController" ng-class="{open: filtersOpen}">
+
+            <section class="tabs" ng-include="'views/tabs.html'"></section>
+            <section class="quick-links" ng-include="'views/quick-links.html'"></section>
+
+            <section class="panels" ng-controller="AccountController">
+
+                <div ng-controller="BasketController">
+
+                    <section class="dashboard">
+                        <img class="avatar" ng-src="https://0.gravatar.com/avatar/{{account.gravatar}}" />
+                        <a>
+                            <span class="basket-items">{{basketCount}}</span>
+                            <span class="total-price">
+                                {{currency.symbol}}
+                                {{subTotal | convert: currency | number: 2}}
+                            </span>
+                        </a>
+                    </section>
+
+                    <section data-panel="addresses" class="addresses">
+                        <div ng-include="'views/filters/addresses.html'"></div>
+                    </section>
+
+                    <section data-panel="basket" class="basket">
+                        <div ng-include="'views/filters/basket.html'"></div>
+                    </section>
+
+                </div>
+
+                <section data-panel="account" class="account">
+                    <div ng-include="'views/filters/account.html'"></div>
+                </section>
+
+                <section data-panel="basic" class="basic">
+                    <div ng-include="'views/filters/search.html'"></div>
+                    <div ng-include="'views/filters/price.html'"></div>
+                </section>
+
+                <section data-panel="colours" class="colours">
+                    <div ng-include="'views/filters/colours.html'"></div>
+                </section>
+
+                <section data-panel="brands" class="brands">
+                    <div ng-include="'views/filters/brands.html'"></div>
+                </section>
+
+            </section>
+
+        </section>
+
+        <section ng-click="closeModal(); closeFilters()" class="products" ng-class="{'filters-open': filtersOpen, 'modal-open': modalOpen}">
+
+            <div data-sidebar class="right">
+
+                <div class="models" title="Current amount of products currently being shown on the page.">
+                    {{statistics.models.current}}/{{statistics.models.total}} in {{statistics.responseTime}}ms
+                </div>
+
+                <section class="currencies" ng-controller="CurrenciesController" ng-hide="currencies.length <= 1">
+                    <h3>Currencies</h3>
+                    <ul>
+                        <li ng-repeat="model in currencies | orderBy: 'code'" ng-class="{active: currency == model}">
+                            <span class="symbol">{{model.symbol}}</span>
+                            <a ng-click="setCurrency(model)">{{model.code}}</a>
+                        </li>
+                    </ul>
+                </section>
+
+            </div>
+
+            <section class="pagination" ng-include="'views/pagination.html'"></section>
+
+            <div class="sorting">
+                <label>Sort By:</label>
+                <ul class="properties">
+                    <li ng-repeat="property in sortProperties">
+                        <a ng-click="setSorting(property)">{{property}}</a>
+                        <span ng-hide="sorting.property != property" class="direction">
+                            ({{sorting.direction}})
+                        </span>
+                    </li>
+                </ul>
+            </div>
+
+            <ul class="collection">
+                <li ng-repeat="product in products" ng-click="openProduct(product.id, $event)">
+                    <img ng-src="{{product.image}}" alt="{{product.name}}'s image" />
+                    <h2><a>{{product.name}}</a></h2>
+                    <div class="price">
+                        {{currency.symbol}}
+                        {{product.price | convert: currency | number: 2}}
+                    </div>
+                </li>
+                <li class="loading" ng-show="!loaded">
+                    <img src="images/loading.gif" alt="Loading" />
+                    <label>We're loading the products...&hellip;</label>
+                </li>
+                <li class="all-gone" ng-show="loaded && products.length == 0">
+                    <label>Bravo! You've filtered all of the products.</label>
+                </li>
+            </ul>
+
+        </section>
+
+        <section data-sidebar class="modal-window {{className}}" ng-controller="ModalController" ng-class="{ 'modal-open': modalOpen }">
+            <div class="view" ng-include="partial"></div>
+        </section>
+
+    </section>
+
+</body>
+</html>

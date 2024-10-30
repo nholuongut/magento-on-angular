@@ -1,0 +1,97 @@
+@import 'filters/tabs.css';
+@import 'filters/colours.css';
+@import 'filters/prices.css';
+@import 'filters/brands.css';
+@import 'filters/account.css';
+@import 'filters/quick-links.css';
+
+section.filters {
+    height: 100%;
+    float: left;
+    z-index: 2;
+    position: fixed;
+    background-color: white;
+    box-sizing: border-box;
+    box-shadow: 0 -20px 60px rgba(0, 0, 0, .35);
+    width: 270px;
+    margin-left: -215px;
+    transition: margin-left .35s, width .35s;
+    -o-transition: margin-left .35s, width .35s;
+    -ms-transition: margin-left .35s, width .35s;
+    -moz-transition: margin-left .35s, width .35s;
+    -webkit-transition: margin-left .35s, width .35s;
+}
+
+section.filters.open {
+    margin-left: 0;
+}
+
+section.filters.open section.quick-links {
+    opacity: 0;
+    position: absolute;
+}
+
+section.filters div.filter {
+    font-family: "Source Sans Pro", sans-serif;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    max-height: 500px;
+    transition: all .55s;
+    -o-transition: all .55s;
+    -ms-transition: all .55s;
+    -moz-transition: all .55s;
+    -webkit-transition: all .55s;
+}
+
+section.filters div.filter h2 {
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 14px;
+    width: 100%;
+    font-weight: 400;
+    line-height: 20px;
+    cursor: pointer;
+    margin: 0;
+    padding: 5px 10px;
+    border-bottom: 1px solid #d3d3d3;
+}
+
+section.filters div.filter ul.more-links {
+    overflow: hidden;
+    position: absolute;
+    margin: 6px 8px 0 0;
+    top: 0;
+    right: 0;
+}
+
+section.filters div.filter ul.more-links li {
+    float: left;
+    overflow: hidden;
+    padding: 0 8px;
+}
+
+section.filters div.filter ul.more-links a {
+    font-size: 11px;
+    cursor: pointer;
+
+}
+
+section.filters div.filter img.icon {
+    float: left;
+    margin: 2px 8px 0 0;
+    opacity: .2;
+}
+
+section.filters div.filter p.description {
+    padding: 10px 10px 5px 10px;
+    font-size: 12px;
+}
+
+section.filters div.filter p.description label {
+    font-weight: 400;
+    font-size: 12px;
+}
+
+section.filters div.filter div.inner:not(.without-padding) {
+    padding: 0 10px;
+}
